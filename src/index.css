@@ -17,9 +17,11 @@ body {
   align-items: center;
 }
 .nav h2{
-
-  color: antiquewhite;
+  font-size: 2rem;
+  font-weight: 300;
+  color: rgb(255, 197, 197);
   margin-right: 6%;
+  margin-bottom: 40px;
 }
 .search-container input {
   height: 43px;
