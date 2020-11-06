@@ -47,13 +47,12 @@ export function handleMovieSearch(movie) {
   const url = `http://www.omdbapi.com/?apikey=a47d9153&t=${movie}`;
   return function(dispatch) {
     fetch(url)
-      .then(response => response.json())
-      .then(movie => {
+      .then((response) => response.json())
+      .then((movie) => {
         console.log('movie', movie); 
+        dispatch(addMovieSearchResult(movie));
       });
-      // dispatch action
-      dispatch(addMovieSearchResult(movie));
-  }
+  };
 }
 
 export function addMovieSearchResult (movie) {

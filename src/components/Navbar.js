@@ -1,7 +1,12 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { addMoviesToList, handleMovieSearch } from '../actions'; 
 
-class Navbar extends React.Component {
+// import { data } from '../data';
+import { StoreContext } from '..';
+
+
+
+class Navbar extends Component {
 
   constructor (props) {
     super(props);
@@ -13,44 +18,39 @@ class Navbar extends React.Component {
   
   handleAddToMovies = (movie) => {
     this.props.dispatch(addMoviesToList(movie));
-    this.setState({
-      showSearchResults: false
-    });
-  }
+  };
 
-
-  handleSearch = () => {
+  handleSearchClick = () => {
     const { searchText } = this.state;
     this.props.dispatch(handleMovieSearch(searchText));
-  }
+  };
 
-
-  handleChange = (event) => {
+  handleSearchChange = (e) => {
     this.setState({
-      searchText: event.target.value
+      searchText: e.target.value,
     });
-  }
+  };
 
   render() {
     const { showSearchResults, } = this.props.search;
-    const { result } = this.props.search;
+    const { result: movie } = this.props.search;
     return (
       <div className="nav">
-        <h2>c i n e f y</h2>
+        {/* <h2>c i n e f y</h2> */}
         <div className="search-container">
-          <input onChange = {this.handleChange} />
-          <button id="search-btn" onClick={this.handleSearch}>
+          <input onChange = {this.handleSearchChange} />
+          <button id="search-btn" onClick={this.handleSearchClick}>
             Search
           </button>
 
           {showSearchResults && 
             <div className="search-results">
               <div className="search-result">
-                <img src={result.Poster} alt="search-pic"/>
+                <img src={movie.Poster} alt="search-pic"/>
 
                 <div className="movie-info">
-                  <span> {result.Title} </span>
-                  <button onClick={()=> this.handleAddToMovies(result)}> 
+                  <span> {movie.Title} </span>
+                  <button onClick={()=> this.handleAddToMovies(movie)}> 
                     Add to Movies
                   </button>
                 </div>
@@ -67,4 +67,15 @@ class Navbar extends React.Component {
 
 }
 
-export default Navbar;
+
+class NavbarWrapper extends React.Component{
+  render(){
+    return(
+      <StoreContext.Consumer>
+        {(store)=> <Navbar dispatch = {store.dispatch} search = {this.props.search} />}
+      </StoreContext.Consumer>
+    );
+  }
+}
+
+export default NavbarWrapper;

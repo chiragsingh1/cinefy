@@ -78,7 +78,7 @@ export function search(state = initialSearchState, action) {
         showSearchResults: false
       };
     default:
-      return state
+      return state;
   }
 }
 
